@@ -37,7 +37,6 @@ export default function Home() {
     console.log('handle show withdraw');
     setShow(true);
 
-   // getPopUpValue();
   };
 
   useEffect(() => {
@@ -52,11 +51,10 @@ export default function Home() {
     console.log("handle url")
     try {
       let url = window.location.href;
-      console.log("url",url);
+     
       let id = url.split('=')[1]
       setRefId(id)
-      console.log("🚀 ~ handleUrl ~ id", id)
-      console.log("🚀 ~ handleUrl ~ url", url)
+  
 
     } catch (error) {
       console.log("🚀 ~ handleUrl ~ error", error)
@@ -70,15 +68,13 @@ export default function Home() {
   useEffect(() => {
     if (userAddress) {
       getUserWalletBalance();
-     // getUserStatus();
+    
     }
     return () => { };
   }, [userAddress]);
 
   const handleWalletConnect = async () => {
-    // try {
-    //   await provider.enable();
-    // } catch (error) {}
+    
     if (window.ethereum) {
       window.ethereum
         .request({ method: 'eth_requestAccounts' })
@@ -118,38 +114,7 @@ export default function Home() {
   }
   //
   
-
-  const getUserStatus = async () => {
-
-    try {
-      if (!userAddress) {
-        return toast.error('Connect Wallet first!');
-      }
-     
-      let _logi = await axios.get(
-        `https://federalcoin.social/dashboard/api/login.php?address=${userAddress}`
-      );
-      
-      console.log('🚀 ~ handleUserLogin ~ _logi', _logi);
-     // console.log('🚀 ~ handleUserLogin ~ _logi', _logi?.data[1]?.split(':')[1]);
-      let status=_logi?.data[1]?.split(':')[1]
-      if (status == 200) {
-        // setIsValid(true);
-        
-        setRegButtonStatus('userLoggedIn');
-      } else {
-        console.log("🚀 ~ handleUserLogin ~ _par");
-      }
-    } catch (error) {
-      console.log('🚀 ~ handleUserLogin ~ error', error);
-      let parse = JSON.stringify(error);
-      let _par = JSON.parse(parse);
-      console.log("🚀 ~ handleUserLogin ~ _par", _par)
-      toast.error('Please register yourself!');
-   
-    }
-
-  }; 
+ 
 
 
   const getUserWalletBalance = async () => {
@@ -179,49 +144,10 @@ export default function Home() {
 
     }
   };
-/*
+
   const handleUserLogin = async () => {
-    console.log('handle login');
-    try {
-      if (!userAddress) {
-        return toast.error('Connect Wallet first!');
-      }
-      setButtonStatus('login');
-      
-        let _logi = await axios.get(
-          `https://metabitclub.com/dashboard/b59c67bf196a4758191e42f76670cebaAPI/login.php?address=${userAddress}`
-        );
-        
-        console.log('🚀 ~ handleUserLogin ~ _logi', _logi);
-        console.log('🚀 ~ handleUserLogin ~ _logi', _logi?.data[1]?.split(':')[1]);
-        let status=_logi?.data[1]?.split(':')[1]
-        if (status == 200) {
-         
-          if (window) {
-
-            window?.location?.replace(`https://metabitclub.com/dashboard/home.php?address=${userAddress}`)
-          }
-          toast.success('Login success!');
-          setButtonStatus('');
-        } else {
-     
-       throw new Error('Not registered');
-        }
-      
-    } catch (error) {
-      console.log('🚀 ~ handleUserLogin ~ error', error);
-      let parse = JSON.stringify(error);
-      let _par = JSON.parse(parse);
-      console.log("🚀 ~ handleUserLogin ~ _par", _par)
-      toast.error('Please register yourself!');
-      setButtonStatus('');
-    }
-  };
-
-*/
-  const handleUserLoginNew = async () => {
-    console.log('handle login');
-    //https://federalcoin.social/dashboard/api/login.php?address=0xA5a798128eDB9846BD4e78b2031CA7bBC97D4B3B
+    
+    
     try {
       if (!userAddress) {
         return toast.error('Connect Wallet first!');
@@ -238,17 +164,17 @@ export default function Home() {
        
          if (res.data[1] === 'Status:200') {
           
-          /* if (window) {
-   
-             window?.location?.replace(`https://federalcoin.social/dashboard/dashboard.php?address=${userAddress}`)
-           }  */
+          if (window) {
+
+            window?.location?.replace(`https://federalcoin.social/dashboard/dashboard.php?address=${userAddress}`)
+         }  
            toast.success('Login success!');
            setButtonStatus('');
          } else {
-           toast.error('Something Went Wrong!');
+           toast.error(res.data[0]);
            console.log("🚀 ~ handleUserLogin ~ _par")
            setButtonStatus('');
-          // throw new Error('Not registered');
+           
          }
    
           
@@ -274,40 +200,11 @@ export default function Home() {
 
  
 
-/*  const handleUserRegister = async () => {
+
+
+  const handleUserRegister = async () => {
     console.log('handle register');
-    try {
-      if (!userAddress) {
-        return toast.error('Connect Wallet first!');
-      }
-      setButtonStatus('register');
-        console.log(refId);
-        let _reg =await axios.get(
-          `https://metabitclub.com/dashboard/b59c67bf196a4758191e42f76670cebaAPI/register.php?address=${userAddress}&refid=${refId}`
-        );
-        console.log("register check");
-
-        toast.success('Register success!');
-
-        setButtonStatus('');
-      
-    } catch (error) {
-      let parse = JSON.stringify(error);
-      let _par = JSON.parse(parse);
-      if (_par?.reason) {
-        toast.error(_par?.reason);
-      }
-      console.log('🚀 ~ handleUserRegister ~ _par', _par);
-      setButtonStatus('');
-    }
-  };
-
-*/
-
-  const handleUserRegisterNew = async () => {
-    console.log('handle register');
-   //https://federalcoin.social/dashboard/api/register.php?address=0xA5a798128eDB9846BD4e78b2031CA7bBC97D4B3B&refid=123456 
-
+   
 
     try {
       if (!userAddress) {
@@ -343,7 +240,7 @@ export default function Home() {
       });
         console.log("register check");
 
-        //toast.success('Register success!');
+        
 
         setButtonStatus('');
       
@@ -427,9 +324,9 @@ export default function Home() {
                     <div className='row'>
                       <div className='col-md-12 d-flex justify-content-center'>
                         <img
-                          src='https://metabitclub.com/images/navLogo.png'
-                          
-                          alt='metabitclub'
+                         
+                          src='/assets/fdr_logo.png'
+                          alt='logo'
                           loading='lazy'
                           
                           className='myImg'
@@ -506,7 +403,7 @@ export default function Home() {
                           </div>
                         ) : (
                           <button
-                            onClick={handleUserLoginNew}
+                            onClick={handleUserLogin}
                             className='btn btn-outline border-white text-white withdrawButton'
                           >
                             Login
@@ -525,7 +422,7 @@ export default function Home() {
                           </div>
                         ) : (
                           <button
-                            onClick={handleUserRegisterNew}
+                            onClick={handleUserRegister}
                             className='btn btn-outline border-white text-white withdrawButton'
                           >
                             Register
@@ -649,8 +546,7 @@ export default function Home() {
                               ) : (
                                 <button
                                   className={`btn btn-outline border-white text-white  withdrawButton`}
-                                 // onClick={_handleApprove}
-                                // onClick={handleShow}
+                                 
                                 >
                                   APPROVE
                                 </button>
@@ -673,8 +569,7 @@ export default function Home() {
                               ) : (
                                 <button
                                   className={`btn btn-outline border-white text-white  withdrawButton`}
-                               //   onClick={_handleDeposit}
-                                // onClick={handleShow}
+                               
                                 >
                                   Deposit
                                 </button>
@@ -744,8 +639,7 @@ export default function Home() {
                           {!handleWithdrawLoader ? (
                             <button
                               className='btn btn-outline border-white text-white withdrawButton'
-                            //  onClick={handleWithdraw}
-                            // onClick={handleShow}
+                            
                             >
                               Withdraw
                             </button>
@@ -779,26 +673,7 @@ export default function Home() {
             ''
           )}
 
-          {/* <Modal show={show} onHide={handleClose}>
-            <Modal.Header closeButton>
-              <Modal.Title>
-                <h4 className='text-dark'>Transaction </h4>
-              </Modal.Title>
-            </Modal.Header>
-            <Modal.Body>
-              <p className='text-dark'>Are you sure ?</p>
-              <p className='text-dark'>Withdraw Value {popUpwithdrawValue}</p>
-              <p className='text-dark'>Claim Value {popUpClaimValue} </p>
-            </Modal.Body>
-            <Modal.Footer>
-              <Button variant='danger' onClick={handleClose}>
-                Reject
-              </Button>
-              <Button variant='primary' onClick={handleWithdraw}>
-                Confirm
-              </Button>
-            </Modal.Footer>
-          </Modal> */}
+          
         </div>
       ) : (
         ''
